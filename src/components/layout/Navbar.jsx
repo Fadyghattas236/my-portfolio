@@ -3,8 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
-// استيراد اللوجو - هتغير المسار حسب مكان اللوجو بتاعك
-import logo from '../../assets/logo.png'; // ← غير المسار حسب مكان اللوجو
+// استيراد اللوجو
+import logo from '../../assets/logo.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -124,8 +124,8 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* ===== Desktop CTA Button ===== */}
-          <div className="hidden md:block">
+          {/* ===== Desktop CTA Button - شيلناها ===== */}
+          {/* <div className="hidden md:block">
             <motion.a
               href="#contact"
               whileHover={{ scale: 1.05, y: -2 }}
@@ -139,7 +139,7 @@ const Navbar = () => {
                 </span>
               </div>
             </motion.a>
-          </div>
+          </div> */}
 
           {/* ===== Mobile Menu Button ===== */}
           <button
@@ -196,8 +196,8 @@ const Navbar = () => {
             );
           })}
           
-          {/* Mobile CTA */}
-          <motion.a
+          {/* Mobile CTA - شيلناها */}
+          {/* <motion.a
             href="#contact"
             onClick={() => setIsOpen(false)}
             whileHover={{ scale: 1.02 }}
@@ -209,7 +209,7 @@ const Navbar = () => {
                 Hire Me
               </span>
             </div>
-          </motion.a>
+          </motion.a> */}
         </div>
       </motion.div>
     </motion.nav>
