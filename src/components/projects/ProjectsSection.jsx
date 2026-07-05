@@ -81,12 +81,12 @@ const ProjectsPreview = () => {
 
         <AnimatedSection delay={0.4}>
           <div className="text-center mt-10">
-            <Link
+            {/* <Link
               to="/projects"
               className="btn-primary inline-block"
             >
               View All Projects →
-            </Link>
+            </Link> */}
           </div>
         </AnimatedSection>
       </div>
