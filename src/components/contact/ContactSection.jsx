@@ -9,7 +9,6 @@ import {
 } from 'react-icons/fa';
 import { personalData } from '../../data/personalData';
 import AnimatedSection from '../common/AnimatedSection';
-// import emailjs from 'emailjs-com'; // للاستخدام لاحقاً
 
 const ContactSection = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -20,18 +19,46 @@ const ContactSection = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    // ===== بناء رسالة واتساب منسقة =====
+    const phoneNumber = personalData.phone.replace('+', ''); // إزالة + لو موجودة
     
-    // محاكاة إرسال (هتستبدلها بـ EmailJS بعدين)
+    // تنسيق الرسالة
+    const message = `
+📋 *New Message from Portfolio*
+
+👤 *Name:* ${formData.name}
+📧 *Email:* ${formData.email}
+📌 *Subject:* ${formData.subject}
+
+💬 *Message:*
+${formData.message}
+
+━━━━━━━━━━━━━━━━━━━━
+📅 Sent from: Fady Ashraf Portfolio
+🌐 https://fadyashraf.com
+    `.trim();
+
+    // تشفير الرسالة للـ URL
+    const encodedMessage = encodeURIComponent(message);
+    
+    // رابط واتساب
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+    // فتح واتساب في تبويب جديد
+    window.open(whatsappUrl, '_blank');
+
+    // محاكاة إرسال ناجح
     setTimeout(() => {
       setIsSent(true);
       setIsLoading(false);
       setFormData({ name: '', email: '', subject: '', message: '' });
       setTimeout(() => setIsSent(false), 5000);
-    }, 1500);
+    }, 1000);
   };
 
   const contactMethods = [
-    { icon: <FaWhatsapp />, label: 'WhatsApp', value: personalData.phone, link: `https://wa.me/${personalData.phone}`, color: 'hover:bg-[#25D366]' },
+    { icon: <FaWhatsapp />, label: 'WhatsApp', value: personalData.phone, link: `https://wa.me/${personalData.phone.replace('+', '')}`, color: 'hover:bg-[#25D366]' },
     { icon: <FaLinkedin />, label: 'LinkedIn', value: personalData.linkedin, link: personalData.linkedin, color: 'hover:bg-[#0A66C2]' },
     { icon: <FaGithub />, label: 'GitHub', value: personalData.github, link: personalData.github, color: 'hover:bg-[#333]' },
     { icon: <FaFacebook />, label: 'Facebook', value: personalData.facebook, link: personalData.facebook, color: 'hover:bg-[#1877F2]' },
@@ -91,6 +118,23 @@ const ContactSection = () => {
                 </div>
               </div>
             </div>
+
+            {/* ===== واتساب مباشر ===== */}
+            <motion.a
+              href={`https://wa.me/${personalData.phone.replace('+', '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.02 }}
+              className="block glass-effect p-4 rounded-xl border border-green-500/30 hover:border-green-500/60 transition-all duration-300 text-center"
+            >
+              <div className="flex items-center justify-center gap-3">
+                <FaWhatsapp className="text-2xl text-green-400" />
+                <div>
+                  <p className="text-sm font-semibold text-green-400">Chat on WhatsApp</p>
+                  <p className="text-xs text-gray-400">Fastest way to reach me</p>
+                </div>
+              </div>
+            </motion.a>
           </motion.div>
 
           {/* ===== الفورم ===== */}
@@ -160,12 +204,12 @@ const ContactSection = () => {
                 className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${
                   isSent 
                     ? 'bg-green-500 text-white' 
-                    : 'bg-gradient-to-r from-primary to-secondary text-white hover:shadow-lg hover:shadow-primary/30'
+                    : 'bg-gradient-to-r from-green-400 to-green-600 text-white hover:shadow-lg hover:shadow-green-500/30'
                 }`}
               >
                 {isLoading ? (
                   <>
-                    <span className="animate-spin">⏳</span> Sending...
+                    <span className="animate-spin">⏳</span> Opening WhatsApp...
                   </>
                 ) : isSent ? (
                   <>
@@ -173,10 +217,14 @@ const ContactSection = () => {
                   </>
                 ) : (
                   <>
-                    <FaPaperPlane /> Send Message
+                    <FaWhatsapp /> Send via WhatsApp
                   </>
                 )}
               </motion.button>
+              
+              <p className="text-center text-xs text-gray-500 mt-2">
+                📱 You'll be redirected to WhatsApp to send your message
+              </p>
             </form>
           </motion.div>
         </div>
