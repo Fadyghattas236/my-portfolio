@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { FaGithub, FaLinkedin, FaFacebook, FaWhatsapp, FaCode, FaReact, FaWordpress } from 'react-icons/fa';
 import { FiChevronDown } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import { personalData } from '../../data/personalData';
 import heroImg from '../../assets/logo.png';
 
@@ -113,7 +114,7 @@ const HeroSection = () => {
           {personalData.bio}
         </motion.p>
 
-        {/* ===== إحصائيات سريعة - باستخدام margin ===== */}
+        {/* ===== إحصائيات سريعة ===== */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -128,28 +129,30 @@ const HeroSection = () => {
           ))}
         </motion.div>
 
-        {/* ===== أزرار التواصل - باستخدام margin ===== */}
+        {/* ===== أزرار التواصل ===== */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.6 }}
           className="flex flex-wrap justify-center mb-8"
         >
-          <a
-            href="#projects"
-            className="btn-primary mx-2 my-1"
+          <Link
+            to="/projects"
+            className="btn-primary mx-2 my-1 inline-flex items-center gap-2"
           >
             <FaCode /> View My Work
-          </a>
+          </Link>
           <a
-            href="#contact"
-            className="btn-secondary mx-2 my-1"
+            href={`https://wa.me/${personalData.phone}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary mx-2 my-1 inline-flex items-center gap-2"
           >
             <FaWhatsapp /> Contact Me
           </a>
         </motion.div>
 
-        {/* ===== أيقونات السوشيال ميديا - باستخدام margin ===== */}
+        {/* ===== أيقونات السوشيال ميديا ===== */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
